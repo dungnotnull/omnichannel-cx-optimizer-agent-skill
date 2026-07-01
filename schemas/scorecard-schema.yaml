@@ -1,0 +1,68 @@
+# Standardized Scorecard Schema — Business Operations Cluster
+
+# This schema is used across all business-operations cluster skills
+# to ensure consistent output formatting and cross-skill compatibility.
+
+scorecard:
+  version: "1.0"
+  schema_type: "dimensional_scorecard"
+
+  metadata:
+    assessment_date: datetime  # ISO 8601 format
+    assessor: string  # Skill name or identifier
+    framework: string  # Primary framework used for assessment
+    secondary_frameworks: [string]  # Additional frameworks referenced
+    overall_score: number  # Weighted average 0-100
+    overall_band: string  # "critical" | "needs improvement" | "adequate" | "good" | "excellent"
+    confidence: number  # Overall confidence 0-1
+    assessment_duration: string  # Human-readable duration
+
+  dimensions:
+    # Each dimension follows this structure
+    - dimension_name: string
+      score: number  # 0-100
+      band: string  # "critical" | "needs improvement" | "adequate" | "good" | "excellent"
+      weight: number  # Weight in overall calculation (0-1)
+      evidence: string  # Evidence justifying the score
+      framework: string  # Framework used for this dimension
+      confidence: number  # Confidence in this score 0-1
+      sources: [string]  # Citations for evidence
+      strengths: [string]  # Specific strengths identified
+      weaknesses: [string]  # Specific weaknesses identified
+      benchmark_comparison: string  # How it compares to industry benchmarks (optional)
+
+  scoring_summary:
+    total_dimensions: number
+    critical_dimensions: number  # Count of dimensions in "critical" band
+    needs_improvement_dimensions: number  # Count of dimensions in "needs improvement" band
+    adequate_dimensions: number  # Count of dimensions in "adequate" band
+    good_dimensions: number  # Count of dimensions in "good" band
+    excellent_dimensions: number  # Count of dimensions in "excellent" band
+
+  evidence_inventory:
+    frameworks_cited: [string]
+    external_sources: [string]
+    internal_knowledge_entries: number  # Count from SECOND-KNOWLEDGE-BRAIN.md
+    evidence_hierarchy_distribution:
+      systematic_review: number
+      meta_analysis: number
+      rct: number
+      benchmark: number
+      cohort_study: number
+      case_study: number
+      expert_opinion: number
+      blog: number
+
+# Quality Gate Validation
+quality_gate_validation:
+  all_dimensions_scored: boolean  # Every dimension has a numeric score
+  all_dimensions_have_evidence: boolean  # Every dimension has evidence text
+  at_least_one_framework_cited: boolean  # At least one framework referenced
+  all_scores_in_range: boolean  # All scores between 0-100
+  evidence_hierarchy_compliant: boolean  # Evidence properly categorized
+
+# Output Formats
+output_formats:
+  markdown: boolean  # Generate human-readable markdown
+  json: boolean  # Generate machine-readable JSON
+  csv: boolean  # Generate spreadsheet-compatible CSV

@@ -1,0 +1,146 @@
+# Standardized Roadmap Schema — Business Operations Cluster
+
+# This schema is used across all business-operations cluster skills
+# to ensure consistent improvement roadmaps and cross-skill compatibility.
+
+roadmap:
+  version: "1.0"
+  schema_type: "improvement_roadmap"
+
+  metadata:
+    creation_date: datetime  # ISO 8601 format
+    creator: string  # Skill name or identifier
+    based_on_scorecard: string  # Reference to the scorecard this roadmap addresses
+    total_items: number  # Total number of roadmap items
+    estimated_total_effort: string  # Human-readable total effort estimate
+    estimated_total_timeframe: string  # Human-readable overall timeframe
+
+  # Quick Wins — High impact, low effort (3-6 months)
+  quick_wins:
+    - item_id: string  # Unique identifier
+      title: string  # Clear, actionable title
+      description: string  # Detailed explanation of the change
+      effort: number  # 1-5 scale: 1=hours, 2=days, 3=weeks, 4=months, 5=quarters
+      impact: number  # 1-5 scale: 1=minor, 2=moderate, 3=significant, 4=major, 5=transformative
+      priority_score: number  # Calculated: impact / effort
+      success_metric: string  # Measurable success criterion
+      current_baseline: string  # Current state metric
+      target_state: string  # Desired future state metric
+      timeframe: string  # Human-readable duration (e.g., "2-3 weeks")
+      dependencies: [string]  # IDs of dependent items (empty if none)
+      addresses_dimensions: [string]  # Which scorecard dimensions this improves
+      estimated_cost: string  # Cost estimate (optional)
+      responsible_party: string  # Who should execute (optional)
+      risk_level: string  # "low" | "medium" | "high"
+
+  # Major Projects — High impact, medium-high effort (6-18 months)
+  major_projects:
+    # Same structure as quick_wins
+    - item_id: string
+      title: string
+      description: string
+      effort: number
+      impact: number
+      priority_score: number
+      success_metric: string
+      current_baseline: string
+      target_state: string
+      timeframe: string
+      dependencies: [string]
+      addresses_dimensions: [string]
+      estimated_cost: string
+      responsible_party: string
+      risk_level: string
+
+  # Long-term Initiatives — High impact, high effort (18+ months)
+  long_term:
+    # Same structure as quick_wins
+    - item_id: string
+      title: string
+      description: string
+      effort: number
+      impact: number
+      priority_score: number
+      success_metric: string
+      current_baseline: string
+      target_state: string
+      timeframe: string
+      dependencies: [string]
+      addresses_dimensions: [string]
+      estimated_cost: string
+      responsible_party: string
+      risk_level: string
+
+  # Roadmap Summary Statistics
+  summary:
+    quick_wins_count: number
+    major_projects_count: number
+    long_term_count: number
+    total_count: number
+
+    effort_distribution:
+      quick_wins_avg_effort: number
+      major_projects_avg_effort: number
+      long_term_avg_effort: number
+
+    impact_distribution:
+      quick_wins_avg_impact: number
+      major_projects_avg_impact: number
+      long_term_avg_impact: number
+
+    priority_rankings:
+      # Top 5 items across all categories by priority score
+      top_5_priority_items:
+        - rank: number
+          item_id: string
+          title: string
+          category: string  # "quick_win" | "major_project" | "long_term"
+          priority_score: number
+
+  # Dependency Graph
+  dependency_graph:
+    nodes: [string]  # All item IDs
+    edges:
+      - from: string  # Dependency item ID
+        to: string  # Dependent item ID
+        type: string  # "hard" | "soft"
+
+    critical_path: [string]  # Ordered list of items on critical path
+    parallel_opportunities: [[string]]  # Groups of items that can be done in parallel
+
+  # Risk Assessment
+  risk_assessment:
+    high_risk_items: [string]  # Item IDs with high risk level
+    risk_mitigation:
+      - item_id: string
+        risks: [string]
+        mitigation_strategies: [string]
+
+    overall_risk_profile: string  # "low" | "medium" | "high"
+    risk_by_category:
+      quick_wins: string
+      major_projects: string
+      long_term: string
+
+  # Stakeholder Alignment
+  stakeholder_alignment:
+    - stakeholder: string
+      supported_items: [string]  # Item IDs this stakeholder supports
+      opposed_items: [string]  # Item IDs this stakeholder opposes
+      concerns: [string]  # Specific concerns to address
+
+# Quality Gate Validation
+quality_gate_validation:
+  every_item_has_success_metric: boolean  # All items have measurable success criteria
+  every_item_has_effort_estimate: boolean  # All items have effort scores
+  every_item_has_impact_estimate: boolean  # All items have impact scores
+  all_priority_scores_calculated: boolean  # All items have impact/effort ratios
+  dependencies_resolved: boolean  # No circular dependencies
+  at_least_one_item_per_category: boolean  # Quick wins, major projects, long-term all populated
+
+# Output Formats
+output_formats:
+  markdown: boolean  # Generate human-readable markdown
+  json: boolean  # Generate machine-readable JSON
+  csv: boolean  # Generate spreadsheet-compatible CSV
+  gantt: boolean  # Generate Gantt chart data
